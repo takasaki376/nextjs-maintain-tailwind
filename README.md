@@ -1,34 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 初期セットアップ
 
-## Getting Started
+## Next.js
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+```
+yarn create next-app . --typescript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 必要 module のインストール
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+yarn add -D prettier eslint-config-prettier
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## tsconfig.json 設定変更
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+`"compilerOptions": {`の最終行に、`"baseUrl": "."`を追加する
 
-## Learn More
+## tailwind css のインストール
 
-To learn more about Next.js, take a look at the following resources:
+```
+yarn add -D tailwindcss postcss autoprefixer
+yarn add -D prettier-plugin-tailwindcss
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## tailwind.config.js, postcss.config.js の生成
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+npx tailwindcss init -p
+```
 
-## Deploy on Vercel
+## tailwind.config.js の 設定追加
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- content にパスを追記する。パスの対象となる tsx ファイルの中身を tailwind から css に変換される。
+- `mode: 'jit',`を先頭に追加する。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+module.exports = {
+  mode: 'jit',
+  content: ["./src/**/**/*.{ts,tsx}"],
+  theme: {
+    /* Mantineと一致させる: https://mantine.dev/theming/responsive */
+    screens: {
+      xs: "576px",
+      sm: "768px",
+      md: "992px",
+      lg: "1200px",
+      xl: "1400px",
+    },
+  },
+  plugins: [],
+}
+```
+
+## mantine インスタンス
+
+```
+yarn add @mantine/hooks @mantine/core @mantine/next
+```
